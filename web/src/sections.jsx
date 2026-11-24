@@ -23,7 +23,7 @@ function Slide({ id, idx, label, children, className = '' }) {
 }
 const Kicker = ({ children }) => <div className="kicker">{children}</div>
 
-/* 00 ─ Title */
+/* 00 ─ Inicio */
 const HERO = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 12]
 export function Title() {
   const [i, setI] = useState(0)
@@ -33,15 +33,15 @@ export function Title() {
   }, [])
   const n = HERO[i]
   return (
-    <Slide id="s0" idx={0} label="Title">
+    <Slide id="s0" idx={0} label="Inicio">
       <div className="title-grid">
         <Reveal className="title-text">
           <div className="eyebrow">IS-237 · Organización Computacional · UNADECA</div>
-          <h1>BCD to 7&#8209;segment decoder</h1>
-          <p className="lede">Four input bits, seven segments, and nothing but logic gates in between.</p>
+          <h1>Decodificador BCD a 7&nbsp;segmentos</h1>
+          <p className="lede">Cuatro bits de entrada, siete segmentos y solo compuertas lógicas en medio.</p>
           <div className="meta">
-            <span>Joseph Cordova &amp; Nelson</span>
-            <span>Scroll ↓</span>
+            <span>Joseph Cordova y Nelson</span>
+            <span>Desliza ↓</span>
           </div>
         </Reveal>
         <Reveal delay={150} className="hero-card">
@@ -60,17 +60,18 @@ export function Title() {
   )
 }
 
-/* 01 ─ Problem */
+/* 01 ─ Problema */
 export function Problem() {
   return (
-    <Slide id="s1" idx={1} label="Problem">
+    <Slide id="s1" idx={1} label="Problema">
       <div className="stack-56">
         <Reveal className="intro" style={{ maxWidth: 760 }}>
-          <Kicker>01 — PROBLEM &amp; GOAL</Kicker>
-          <h2 className="h2-lg">Turn a 4-bit number into a digit you can read.</h2>
+          <Kicker>01 — PROBLEMA Y OBJETIVO</Kicker>
+          <h2 className="h2-lg">Convertir un número de 4 bits en un dígito legible.</h2>
           <p className="body-lg">
-            A combinational circuit takes BCD input <b>A B C D</b> (A is the MSB) and drives segments <b>a–g</b> to
-            show 0–9. Inputs 10–15 aren't valid BCD, so the display shows <b className="acc">E</b>.
+            Un circuito combinacional recibe la entrada BCD <b>A B C D</b> (A es el MSB) y controla los segmentos{' '}
+            <b>a–g</b> para mostrar del 0 al 9. Las entradas 10–15 no son BCD válido, así que el display muestra{' '}
+            <b className="acc">E</b>.
           </p>
         </Reveal>
         <Reveal delay={120} className="flow">
@@ -84,8 +85,8 @@ export function Problem() {
           </div>
           <div className="flow-line" />
           <div className="flow-box">
-            <span className="flow-title">Decoder</span>
-            <span className="mono-sm muted">NOT · AND · OR only<br />no decoder IC<br />no Hex Digit Display</span>
+            <span className="flow-title">Decodificador</span>
+            <span className="mono-sm muted">solo NOT · AND · OR<br />sin CI decodificador<br />sin Hex Digit Display</span>
           </div>
           <div className="flow-line" />
           <SevenSeg lit="abcdefg" labels glow={false} width={150} />
@@ -95,29 +96,29 @@ export function Problem() {
   )
 }
 
-/* 02 ─ Truth table */
+/* 02 ─ Tabla de verdad */
 export function TruthTable({ n, setN, go }) {
   return (
-    <Slide id="s2" idx={2} label="Truth table">
+    <Slide id="s2" idx={2} label="Tabla de verdad">
       <div className="split">
         <Reveal className="intro split-side">
-          <Kicker>02 — TRUTH TABLE</Kicker>
-          <h2>4 inputs, 7 outputs, 16 rows.</h2>
+          <Kicker>02 — TABLA DE VERDAD</Kicker>
+          <h2>4 entradas, 7 salidas, 16 filas.</h2>
           <p className="body">
-            Rows 10–15 never happen in valid BCD. We mark them <b style={{ color: XCOL }}>X</b>, don't care, so the
-            K-maps can use them to make bigger groups.
+            Las filas 10–15 nunca ocurren en BCD válido. Las marcamos con <b style={{ color: XCOL }}>X</b> («no
+            importa») para que los mapas K formen grupos más grandes.
           </p>
-          <p className="mono-sm muted">Click a row to select it.</p>
+          <p className="mono-sm muted">Haz clic en una fila para seleccionarla.</p>
           <button className="ghost" onClick={() => go(7)}>
-            Send {bitString(n)} to the live demo ↓
+            Enviar {bitString(n)} a la demo en vivo ↓
           </button>
         </Reveal>
         <Reveal delay={120} className="split-main tt-scroll">
-          <div className="tt" role="table" aria-label="Truth table">
+          <div className="tt" role="table" aria-label="Tabla de verdad">
             <div className="tt-row tt-head" role="row">
               <span>#</span><span>A</span><span>B</span><span>C</span><span>D</span><span />
               {SEGMENTS.map((s) => <span key={s}>{s}</span>)}
-              <span className="right">shows</span>
+              <span className="right">muestra</span>
             </div>
             {Array.from({ length: 16 }, (_, i) => {
               const valid = i < 10
@@ -156,28 +157,28 @@ export function TruthTable({ n, setN, go }) {
   )
 }
 
-/* 03 ─ K-maps */
+/* 03 ─ Mapas K */
 export function KMaps() {
   const [seg, setSeg] = useState('a')
   const [term, setTerm] = useState(null)
   const terms = EXPRESSIONS[seg]
   const note =
     term == null
-      ? "Dots show which terms cover each cell. X = don't care (10–15), treated as 1 when it helps."
+      ? 'Los puntos indican qué términos cubren cada celda. X = no importa (10–15); se toma como 1 cuando ayuda.'
       : (() => {
           const cells = coveredCells(terms[term].cube)
-          return `${terms[term].label} covers ${cells.length} cells: ${cells.join(', ')}`
+          return `${terms[term].label} cubre ${cells.length} celdas: ${cells.join(', ')}`
         })()
   return (
-    <Slide id="s3" idx={3} label="K-maps">
+    <Slide id="s3" idx={3} label="Mapas K">
       <div className="stack-48">
         <Reveal className="head-row">
           <div className="intro" style={{ maxWidth: 640 }}>
-            <Kicker>03 — KARNAUGH MAPS</Kicker>
-            <h2>One map per segment.</h2>
+            <Kicker>03 — MAPAS DE KARNAUGH</Kicker>
+            <h2>Un mapa por segmento.</h2>
             <p className="body">
-              Rows and columns follow Gray code, so neighbours differ by one bit. Each colored group becomes one term.
-              Click a term to isolate it.
+              Filas y columnas siguen el código Gray, así que las celdas vecinas difieren en un solo bit. Cada grupo de
+              color se convierte en un término. Haz clic en un término para aislarlo.
             </p>
           </div>
           <div className="seg-tabs" role="tablist">
@@ -227,18 +228,18 @@ export function KMaps() {
   )
 }
 
-/* 04 ─ Expressions */
+/* 04 ─ Expresiones */
 export function Expressions() {
   const list = [
     ...SEGMENTS.map((s) => ({ name: s, expr: EXPRESSIONS[s].map((t) => t.label).join(' + '), on: s, color: LED })),
     { name: 'INVALID', expr: 'AB + AC', on: E_PATTERN, color: XCOL },
   ]
   return (
-    <Slide id="s4" idx={4} label="Expressions">
+    <Slide id="s4" idx={4} label="Expresiones">
       <div className="stack-48">
         <Reveal className="intro" style={{ maxWidth: 720 }}>
-          <Kicker>04 — SIMPLIFIED EXPRESSIONS</Kicker>
-          <h2>Seven equations and one alarm.</h2>
+          <Kicker>04 — EXPRESIONES SIMPLIFICADAS</Kicker>
+          <h2>Siete ecuaciones y una alarma.</h2>
         </Reveal>
         <div className="expr-grid">
           {list.map((ex, i) => (
@@ -255,7 +256,7 @@ export function Expressions() {
   )
 }
 
-/* 05 ─ Circuit */
+/* 05 ─ Circuito */
 function Shot({ file, placeholder }) {
   return (
     <div className="shot">
@@ -265,54 +266,54 @@ function Shot({ file, placeholder }) {
 }
 export function Circuit() {
   return (
-    <Slide id="s5" idx={5} label="Circuit">
+    <Slide id="s5" idx={5} label="Circuito">
       <div className="stack-40">
         <Reveal className="head-row">
           <div className="intro" style={{ maxWidth: 620 }}>
-            <Kicker>05 — CIRCUIT</Kicker>
-            <h2>Built gate by gate in Logisim-evolution.</h2>
+            <Kicker>05 — CIRCUITO</Kicker>
+            <h2>Construido compuerta por compuerta en Logisim-evolution.</h2>
           </div>
           <div className="stats">
-            <div><b>19</b><span>decoder<br />3 NOT · 9 AND · 7 OR</span></div>
-            <div><b>+3</b><span>INVALID<br />detector</span></div>
-            <div><b>+8</b><span>"E"<br />override</span></div>
-            <div><b className="acc">30</b><span>gates<br />total</span></div>
+            <div><b>19</b><span>decodificador<br />3 NOT · 9 AND · 7 OR</span></div>
+            <div><b>+3</b><span>detector<br />INVALID</span></div>
+            <div><b>+8</b><span>forzado<br />de «E»</span></div>
+            <div><b className="acc">30</b><span>compuertas<br />en total</span></div>
           </div>
         </Reveal>
         <div className="shots">
           <Reveal delay={100} className="shot-wrap">
-            <Shot file={SCREENSHOTS.decoder} placeholder="Logisim screenshot: 0–9 decoder (3 NOT, 9 AND, 7 OR)" />
-            <span className="mono-sm muted">Decoder: AND terms shared across segments</span>
+            <Shot file={SCREENSHOTS.decoder} placeholder="Captura de Logisim: decodificador 0–9 (3 NOT, 9 AND, 7 OR)" />
+            <span className="mono-sm muted">Decodificador: términos AND compartidos entre segmentos</span>
           </Reveal>
           <Reveal delay={200} className="shot-wrap">
-            <Shot file={SCREENSHOTS.invalid} placeholder="Logisim screenshot: INVALID detector + E override" />
+            <Shot file={SCREENSHOTS.invalid} placeholder="Captura de Logisim: detector INVALID + forzado de E" />
             <span className="mono-sm muted">INVALID = AB + AC · a,d,e,f,g = seg + INVALID · b,c = seg · INVALID'</span>
           </Reveal>
         </div>
         <a className="mono-sm" href={`${BASE}img/circuit-overview.svg`} target="_blank" rel="noreferrer">
-          Open the block diagram ↗
+          Abrir el diagrama de bloques ↗
         </a>
       </div>
     </Slide>
   )
 }
 
-/* 06 ─ Efficiency */
-const METRICS = [['gates', 'Gates'], ['inputs', 'Gate inputs'], ['literals', 'Literals']]
-const EFF_NAMES = [['Canonical SOP', 'minterms'], ['K-map', "no don't-cares"], ['K-map', "with don't-cares"]]
+/* 06 ─ Eficiencia */
+const METRICS = [['gates', 'Compuertas'], ['inputs', 'Entradas de compuertas'], ['literals', 'Literales']]
+const EFF_NAMES = [['SOP canónica', 'mintérminos'], ['Mapa K', 'sin «no importa»'], ['Mapa K', 'con «no importa»']]
 export function Efficiency() {
   const [metric, setMetric] = useState('gates')
   const max = EFFICIENCY[0][metric]
   const best = EFFICIENCY[2][metric]
   const label = METRICS.find((m) => m[0] === metric)[1].toLowerCase()
   return (
-    <Slide id="s6" idx={6} label="Efficiency">
+    <Slide id="s6" idx={6} label="Eficiencia">
       <div className="stack-48">
         <Reveal className="head-row">
           <div className="intro">
-            <Kicker>06 — EFFICIENCY</Kicker>
+            <Kicker>06 — EFICIENCIA</Kicker>
             <h2 className="h2-xl">{max} → {best}</h2>
-            <p className="body-lg">{Math.round((1 - best / max) * 100)}% fewer {label} with don't-cares</p>
+            <p className="body-lg">{Math.round((1 - best / max) * 100)}% menos {label} usando «no importa»</p>
           </div>
           <div className="seg-ctl" role="tablist">
             {METRICS.map(([key, l]) => (
@@ -338,29 +339,29 @@ export function Efficiency() {
           ))}
         </div>
         <Reveal as="p" className="mono-md muted" style={{ maxWidth: 780 }}>
-          Counts treat each segment as its own circuit. Sharing AND terms between segments brings the real decoder to 19
-          gates.
+          Los conteos tratan cada segmento como un circuito independiente. Al compartir los términos AND entre
+          segmentos, el decodificador real queda en 19 compuertas.
         </Reveal>
       </div>
     </Slide>
   )
 }
 
-/* 07 ─ Live demo */
+/* 07 ─ Demo en vivo */
 export function Demo({ n, setN, override, setOverride }) {
   const [dSeg, setDSeg] = useState('a')
   const inv = isInvalid(n)
   const firing = EXPRESSIONS[dSeg].map((t, i) => (matches(t.cube, n) ? i : -1)).filter((i) => i >= 0)
-  const caption = n < 10 ? `shows ${n}` : override ? 'invalid BCD → E' : "invalid BCD, no override: don't-care leftovers"
+  const caption = n < 10 ? `muestra ${n}` : override ? 'BCD inválido → E' : 'BCD inválido, sin forzado: restos de los «no importa»'
   return (
-    <Slide id="s7" idx={7} label="Live demo" className="alt">
+    <Slide id="s7" idx={7} label="Demo en vivo" className="alt">
       <div className="stack-44">
         <Reveal className="head-row">
           <div className="intro">
-            <Kicker>07 — LIVE DEMO</Kicker>
-            <h2>Flip the bits.</h2>
+            <Kicker>07 — DEMO EN VIVO</Kicker>
+            <h2>Cambia los bits.</h2>
           </div>
-          <span className="mono-sm muted">Keys A B C D toggle inputs · E toggles override · 0–9 set a digit</span>
+          <span className="mono-sm muted">Teclas A B C D cambian las entradas · E activa el forzado · 0–9 eligen un dígito</span>
         </Reveal>
         <Reveal delay={100} className="demo-row">
           <div className="demo-ctl">
@@ -370,7 +371,7 @@ export function Demo({ n, setN, override, setOverride }) {
                   key={k}
                   className={`toggle ${b ? 'on' : ''}`}
                   aria-pressed={!!b}
-                  aria-label={`Input ${'ABCD'[k]}`}
+                  aria-label={`Entrada ${'ABCD'[k]}`}
                   onClick={() => setN(n ^ (1 << (3 - k)))}
                 >
                   <span className="mono-sm">{'ABCD'[k]}</span>
@@ -379,13 +380,13 @@ export function Demo({ n, setN, override, setOverride }) {
               ))}
             </div>
             <div className="readout">
-              <span className="mono-sm muted">input</span>
+              <span className="mono-sm muted">entrada</span>
               <span className="readout-n">{bitString(n)} <span className="muted">= {n}</span></span>
               <span style={{ color: inv ? XCOL : MUTED }}>INVALID = {inv ? 1 : 0}</span>
             </div>
             <button className="switch" aria-pressed={override} onClick={() => setOverride(!override)}>
               <span className={`switch-track ${override ? 'on' : ''}`}><span /></span>
-              "E" override
+              Forzar «E»
             </button>
           </div>
           <div className="demo-disp">
@@ -420,8 +421,8 @@ export function Demo({ n, setN, override, setOverride }) {
                       )
                     })}
                   </span>
-                  <span className="forced">{forced ? (out ? 'forced on' : 'forced off') : ''}</span>
-                  <span className="state" style={{ color: out ? ACC : MUTED }}>{out ? 'ON' : 'off'}</span>
+                  <span className="forced">{forced ? (out ? 'forzado a 1' : 'forzado a 0') : ''}</span>
+                  <span className="state" style={{ color: out ? ACC : MUTED }}>{out ? 'ENC' : 'apag'}</span>
                 </button>
               )
             })}
@@ -430,8 +431,8 @@ export function Demo({ n, setN, override, setOverride }) {
         <Reveal delay={150} className="demo-k">
           <KMapGrid seg={dSeg} tint={firing} cur={n} dots={false} small />
           <p className="body-sm muted">
-            K-map for segment <b className="acc">{dSeg}</b>. The outlined cell is the current input; tinted cells are the
-            groups that light it. Click a row above to switch segments.
+            Mapa K del segmento <b className="acc">{dSeg}</b>. La celda con borde es la entrada actual; las celdas
+            teñidas son los grupos que la encienden. Haz clic en una fila de arriba para cambiar de segmento.
           </p>
         </Reveal>
       </div>
@@ -439,26 +440,26 @@ export function Demo({ n, setN, override, setOverride }) {
   )
 }
 
-/* 08 ─ Examples */
+/* 08 ─ Ejemplos */
 const EXAMPLES = [
-  { n: 5, title: 'five', note: "B and D are high. BD lights a, B lights c, BC'D lights d, BC' lights f and g. No term of b or e is true." },
-  { n: 9, title: 'nine', note: "A alone lights a, d, f and g. The don't-cares let A cover the whole bottom half of those maps." },
-  { n: 12, title: 'the trap', note: "Left alone, the don't-cares make 1100 look like a 9. INVALID = AB fires, forces b and c off, a d e f g on: E." },
+  { n: 5, title: 'cinco', note: "B y D están en 1. BD enciende a, B enciende c, BC'D enciende d y BC' enciende f y g. Ningún término de b ni de e es verdadero." },
+  { n: 9, title: 'nueve', note: 'Solo A enciende a, d, f y g. Los «no importa» permiten que A cubra toda la mitad inferior de esos mapas.' },
+  { n: 12, title: 'la trampa', note: 'Sin corrección, los «no importa» hacen que 1100 parezca un 9. INVALID = AB se activa: apaga b y c, enciende a d e f g y se ve una E.' },
 ]
 export function Examples({ load }) {
   return (
-    <Slide id="s8" idx={8} label="Examples">
+    <Slide id="s8" idx={8} label="Ejemplos">
       <div className="stack-48">
         <Reveal className="intro" style={{ maxWidth: 720 }}>
-          <Kicker>08 — WORKED EXAMPLES</Kicker>
-          <h2>Three inputs, traced.</h2>
+          <Kicker>08 — EJEMPLOS RESUELTOS</Kicker>
+          <h2>Tres entradas, paso a paso.</h2>
         </Reveal>
         <div className="examples">
           {EXAMPLES.map((ex, k) => {
             const displays =
               ex.n < 10
-                ? [{ on: lit(ex.n), cap: `shows ${ex.n}`, color: LED }]
-                : [{ on: lit(ex.n, false), cap: 'no override', color: XCOL }, { on: lit(ex.n), cap: 'with override', color: LED }]
+                ? [{ on: lit(ex.n), cap: `muestra ${ex.n}`, color: LED }]
+                : [{ on: lit(ex.n, false), cap: 'sin forzado', color: XCOL }, { on: lit(ex.n), cap: 'con forzado', color: LED }]
             return (
               <Reveal key={ex.n} delay={k * 120} className={`example ${ex.n > 9 ? 'trap' : ''}`}>
                 <div className="ex-head">
@@ -478,13 +479,13 @@ export function Examples({ load }) {
                     const f = EXPRESSIONS[s].filter((t) => matches(t.cube, ex.n)).map((t) => t.label)
                     return (
                       <span key={s} style={{ color: f.length ? INK : DIM }}>
-                        {f.length ? `${s} ← ${f.join(', ')}` : `${s}   off`}
+                        {f.length ? `${s} ← ${f.join(', ')}` : `${s}   apagado`}
                       </span>
                     )
                   })}
                 </div>
                 <p className="body-sm">{ex.note}</p>
-                <button className="ghost" onClick={() => load(ex.n)}>Load in demo ↑</button>
+                <button className="ghost" onClick={() => load(ex.n)}>Cargar en la demo ↑</button>
               </Reveal>
             )
           })}
@@ -494,23 +495,23 @@ export function Examples({ load }) {
   )
 }
 
-/* 09 ─ Try it */
+/* 09 ─ Pruébalo */
 export function TryIt() {
   return (
-    <Slide id="s9" idx={9} label="Try it">
+    <Slide id="s9" idx={9} label="Pruébalo">
       <div className="title-grid">
         <Reveal className="intro" style={{ flex: '1 1 480px' }}>
-          <Kicker>09 — TRY IT</Kicker>
-          <h2 className="h2-xl">Questions?</h2>
-          <p className="body-lg" style={{ maxWidth: '32ch' }}>Scan to run the demo on your phone.</p>
+          <Kicker>09 — PRUÉBALO</Kicker>
+          <h2 className="h2-xl">¿Preguntas?</h2>
+          <p className="body-lg" style={{ maxWidth: '32ch' }}>Escanea el código para usar la demo en tu teléfono.</p>
           <div className="links">
             <a href={SITE}>two-bit-dev.github.io/bcd-7seg-decoder</a>
             <a href={REPO}>github.com/Two-Bit-dev/bcd-7seg-decoder</a>
-            <span className="muted">Joseph Cordova &amp; Nelson</span>
+            <span className="muted">Joseph Cordova y Nelson</span>
           </div>
         </Reveal>
         <Reveal delay={150} className="qr-box">
-          <img src={`${BASE}img/qr.svg`} alt="QR code to the live site" />
+          <img src={`${BASE}img/qr.svg`} alt="Código QR del sitio" />
         </Reveal>
       </div>
     </Slide>

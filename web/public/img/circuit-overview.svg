@@ -18,38 +18,38 @@
     </style>
   </defs>
   <rect width="1500" height="860" fill="#fafafa"/>
-  <text x="750" y="40" text-anchor="middle" style="font-size:26px;font-weight:bold">BCD → 7-Segment Decoder: how the signal flows (left to right)</text>
+  <text x="750" y="40" text-anchor="middle" style="font-size:26px;font-weight:bold">Decodificador BCD → 7 segmentos: cómo fluye la señal (de izquierda a derecha)</text>
 
   <!-- Stage 1: Inputs -->
   <rect class="box" x="30" y="90" width="170" height="420" rx="10"/>
   <rect x="30" y="90" width="170" height="34" rx="10" fill="#2c3e50"/>
-  <text class="step" x="115" y="113" text-anchor="middle">1 · INPUTS</text>
+  <text class="step" x="115" y="113" text-anchor="middle">1 · ENTRADAS</text>
   <g class="mono">
     <text x="55" y="170">A  (MSB, 8)</text>
     <text x="55" y="250">B  (4)</text>
     <text x="55" y="330">C  (2)</text>
     <text x="55" y="410">D  (LSB, 1)</text>
   </g>
-  <text class="small" x="115" y="480" text-anchor="middle">4 Input pins</text>
-  <text class="small" x="115" y="498" text-anchor="middle">(toggle switches)</text>
+  <text class="small" x="115" y="480" text-anchor="middle">4 pines de entrada</text>
+  <text class="small" x="115" y="498" text-anchor="middle">(interruptores)</text>
 
   <!-- Stage 2: NOT -->
   <rect class="box" x="250" y="90" width="170" height="420" rx="10"/>
   <rect x="250" y="90" width="170" height="34" rx="10" fill="#2c3e50"/>
-  <text class="step" x="335" y="113" text-anchor="middle">2 · NOT GATES</text>
+  <text class="step" x="335" y="113" text-anchor="middle">2 · COMPUERTAS NOT</text>
   <g class="mono">
     <text x="275" y="250">B → B'</text>
     <text x="275" y="330">C → C'</text>
     <text x="275" y="410">D → D'</text>
   </g>
-  <text class="small" x="335" y="170" text-anchor="middle">A' is never needed</text>
-  <text class="small" x="335" y="480" text-anchor="middle">3 NOT gates</text>
-  <text class="small" x="335" y="498" text-anchor="middle">shared by everyone</text>
+  <text class="small" x="335" y="170" text-anchor="middle">A' nunca se necesita</text>
+  <text class="small" x="335" y="480" text-anchor="middle">3 compuertas NOT</text>
+  <text class="small" x="335" y="498" text-anchor="middle">compartidas por todos</text>
 
   <!-- Stage 3: AND -->
   <rect class="box" x="470" y="90" width="220" height="420" rx="10"/>
   <rect x="470" y="90" width="220" height="34" rx="10" fill="#2c3e50"/>
-  <text class="step" x="580" y="113" text-anchor="middle">3 · AND TERMS</text>
+  <text class="step" x="580" y="113" text-anchor="middle">3 · TÉRMINOS AND</text>
   <g class="mono">
     <text x="495" y="160">T1 = B·D</text>
     <text x="495" y="192">T2 = B'·D'</text>
@@ -61,13 +61,13 @@
     <text x="495" y="384">T8 = B·D'</text>
     <text x="495" y="416">T9 = B·C'·D</text>
   </g>
-  <text class="small" x="580" y="480" text-anchor="middle">9 AND gates, each built</text>
-  <text class="small" x="580" y="498" text-anchor="middle">ONCE and reused</text>
+  <text class="small" x="580" y="480" text-anchor="middle">9 compuertas AND, cada una</text>
+  <text class="small" x="580" y="498" text-anchor="middle">se construye UNA vez y se reutiliza</text>
 
   <!-- Stage 4: OR -->
   <rect class="box" x="740" y="90" width="290" height="420" rx="10"/>
   <rect x="740" y="90" width="290" height="34" rx="10" fill="#2c3e50"/>
-  <text class="step" x="885" y="113" text-anchor="middle">4 · ONE OR GATE PER SEGMENT</text>
+  <text class="step" x="885" y="113" text-anchor="middle">4 · UNA OR POR SEGMENTO</text>
   <g class="mono">
     <text x="760" y="165">a = A + C + T1 + T2</text>
     <text x="760" y="210">b = B' + T3 + T4</text>
@@ -77,13 +77,13 @@
     <text x="760" y="390">f = A + T3 + T7 + T8</text>
     <text x="760" y="435">g = A + T5 + T7 + T6</text>
   </g>
-  <text class="small" x="885" y="480" text-anchor="middle">7 OR gates (set "Number of</text>
-  <text class="small" x="885" y="498" text-anchor="middle">Inputs" to 2–5 as needed)</text>
+  <text class="small" x="885" y="480" text-anchor="middle">7 compuertas OR (ajusta "Number of</text>
+  <text class="small" x="885" y="498" text-anchor="middle">Inputs" a 2–5 según haga falta)</text>
 
   <!-- Stage 5: Override -->
   <rect class="box" x="1080" y="90" width="200" height="420" rx="10" style="stroke:#c0392b"/>
   <rect x="1080" y="90" width="200" height="34" rx="10" fill="#c0392b"/>
-  <text class="step" x="1180" y="113" text-anchor="middle">6 · "E" OVERRIDE</text>
+  <text class="step" x="1180" y="113" text-anchor="middle">6 · FORZADO DE "E"</text>
   <g class="mono">
     <text x="1095" y="165">a + INV</text>
     <text x="1095" y="210">b · INV'</text>
@@ -119,7 +119,7 @@
     <text x="1400" y="252" text-anchor="middle">g</text>
   </g>
   <text class="small" x="1400" y="480" text-anchor="middle">7-Segment Display</text>
-  <text class="small" x="1400" y="498" text-anchor="middle">(I/O library)</text>
+  <text class="small" x="1400" y="498" text-anchor="middle">(biblioteca I/O)</text>
 
   <!-- arrows between stages -->
   <line class="wire" x1="200" y1="300" x2="246" y2="300" marker-end="url(#arr)"/>
@@ -129,18 +129,18 @@
   <line class="wire" x1="1280" y1="300" x2="1316" y2="300" marker-end="url(#arr)"/>
   <!-- A and C also go straight to OR stage (bypass) -->
   <path class="wire" d="M200,160 Q220,70 470,70 L860,70 L860,86" marker-end="url(#arr)" style="stroke-dasharray:6 5"/>
-  <text class="small" x="480" y="62">A, B, C, D (and B', C') also feed the OR gates directly</text>
+  <text class="small" x="480" y="62">A, B, C, D (y B', C') también entran directo a las OR</text>
 
   <!-- Stage 5: Detector -->
   <rect class="box" x="470" y="590" width="560" height="200" rx="10" style="stroke:#c0392b"/>
   <rect x="470" y="590" width="560" height="34" rx="10" fill="#c0392b"/>
-  <text class="step" x="750" y="613" text-anchor="middle">5 · INVALID DETECTOR (inputs 10–15)</text>
+  <text class="step" x="750" y="613" text-anchor="middle">5 · DETECTOR INVALID (entradas 10–15)</text>
   <g class="mono">
     <text x="495" y="665">X1 = A·B      (12, 13, 14, 15)</text>
     <text x="495" y="700">X2 = A·C      (10, 11, 14, 15)</text>
     <text x="495" y="735" style="font-weight:bold">INV = X1 + X2</text>
   </g>
-  <text class="small" x="750" y="775" text-anchor="middle">2 AND + 1 OR · INV = 1 means "not a valid digit"</text>
+  <text class="small" x="750" y="775" text-anchor="middle">2 AND + 1 OR · INV = 1 significa "no es un dígito válido"</text>
 
   <!-- input to detector -->
   <path class="red" d="M115,510 L115,690 L466,690" marker-end="url(#arrR)"/>
@@ -150,5 +150,5 @@
   <text x="1190" y="640" style="font-size:16px;fill:#c0392b;font-weight:bold">INV</text>
 
   <!-- legend -->
-  <text class="small" x="30" y="835">Black = decoder for digits 0–9 (from the K-maps).  Red = error path that forces the letter "E" (segments a, d, e, f, g ON; b, c OFF) for inputs 10–15.</text>
+  <text class="small" x="30" y="835">Negro = decodificador de los dígitos 0–9 (de los mapas K).  Rojo = ruta de error que fuerza la letra "E" (segmentos a, d, e, f, g encendidos; b, c apagados) para las entradas 10–15.</text>
 </svg>

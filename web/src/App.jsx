@@ -3,7 +3,7 @@ import {
   Title, Problem, TruthTable, KMaps, Expressions, Circuit, Efficiency, Demo, Examples, TryIt,
 } from './sections'
 
-const SECTIONS = ['Title', 'Problem', 'Truth table', 'K-maps', 'Expressions', 'Circuit', 'Efficiency', 'Live demo', 'Examples', 'Try it']
+const SECTIONS = ['Inicio', 'Problema', 'Tabla de verdad', 'Mapas K', 'Expresiones', 'Circuito', 'Eficiencia', 'Demo en vivo', 'Ejemplos', 'Pruébalo']
 const DEMO = 7
 
 const go = (i) => document.getElementById(`s${i}`)?.scrollIntoView({ behavior: 'smooth' })
@@ -54,7 +54,7 @@ export default function App() {
 
   return (
     <>
-      <nav className="rail" aria-label="Sections">
+      <nav className="rail" aria-label="Secciones">
         {SECTIONS.map((label, i) => (
           <button key={label} onClick={() => go(i)} aria-current={active === i ? 'true' : undefined} className={active === i ? 'on' : ''}>
             <span className="rail-label">{label}</span>

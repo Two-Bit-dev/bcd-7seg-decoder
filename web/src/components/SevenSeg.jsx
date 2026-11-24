@@ -23,7 +23,7 @@ export default function SevenSeg({ lit = '', color = LED, glow = true, labels = 
       width={width}
       height={width * 1.6}
       role="img"
-      aria-label={`Segments on: ${[...lit].join(', ') || 'none'}`}
+      aria-label={`Segmentos encendidos: ${[...lit].join(', ') || 'ninguno'}`}
       className="sevenseg"
     >
       {Object.entries(BOX).map(([s, box]) => {
