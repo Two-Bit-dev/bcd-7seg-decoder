@@ -38,7 +38,7 @@ export function Title() {
         <Reveal className="title-text">
           <div className="eyebrow">IS-237 · Organización Computacional · UNADECA</div>
           <h1>Decodificador BCD a 7&nbsp;segmentos</h1>
-          <p className="lede">Cuatro bits de entrada, siete segmentos y solo compuertas lógicas en medio.</p>
+          <p className="lede">Entra un número de 4 bits, salen las 7 señales que encienden el display.</p>
           <div className="meta">
             <span>Joseph Cordova y Nelson</span>
             <span>Desliza ↓</span>
@@ -69,7 +69,7 @@ export function Problem() {
           <Kicker>01 — PROBLEMA Y OBJETIVO</Kicker>
           <h2 className="h2-lg">Convertir un número de 4 bits en un dígito legible.</h2>
           <p className="body-lg">
-            Un circuito combinacional recibe la entrada BCD <b>A B C D</b> (A es el MSB) y controla los segmentos{' '}
+            Un circuito combinacional recibe la entrada BCD <b>A B C D</b> (A es el MSB: el bit de más peso, vale 8) y controla los segmentos{' '}
             <b>a–g</b> para mostrar del 0 al 9. Las entradas 10–15 no son BCD válido, así que el display muestra{' '}
             <b className="acc">E</b>.
           </p>
@@ -106,7 +106,7 @@ export function TruthTable({ n, setN, go }) {
           <h2>4 entradas, 7 salidas, 16 filas.</h2>
           <p className="body">
             Las filas 10–15 nunca ocurren en BCD válido. Las marcamos con <b style={{ color: XCOL }}>X</b> (don't
-            care) para que los K-maps formen grupos más grandes.
+            care: da igual qué salga) para que los K-maps formen grupos más grandes.
           </p>
           <p className="mono-sm muted">Haz clic en una fila para seleccionarla.</p>
           <button className="ghost" onClick={() => go(7)}>
@@ -177,8 +177,9 @@ export function KMaps() {
             <Kicker>03 — K-MAPS (KARNAUGH)</Kicker>
             <h2>Un K-map por segmento.</h2>
             <p className="body">
-              Filas y columnas siguen el código Gray, así que las celdas vecinas difieren en un solo bit. Cada grupo de
-              color se convierte en un término. Haz clic en un término para aislarlo.
+              Filas y columnas van en código Gray (00, 01, 11, 10): un orden en el que cada paso cambia un solo bit,
+              así que las celdas vecinas difieren en un bit. Cada grupo de color se convierte en un término. Haz clic en
+              un término para aislarlo.
             </p>
           </div>
           <div className="seg-tabs" role="tablist">
@@ -239,7 +240,7 @@ export function Expressions() {
       <div className="stack-48">
         <Reveal className="intro" style={{ maxWidth: 720 }}>
           <Kicker>04 — EXPRESIONES SIMPLIFICADAS</Kicker>
-          <h2>Siete ecuaciones y una alarma.</h2>
+          <h2>Una ecuación por segmento, más la que detecta el error.</h2>
         </Reveal>
         <div className="expr-grid">
           {list.map((ex, i) => (
@@ -271,7 +272,8 @@ export function Circuit() {
         <Reveal className="head-row">
           <div className="intro" style={{ maxWidth: 620 }}>
             <Kicker>05 — CIRCUITO</Kicker>
-            <h2>Construido compuerta por compuerta en Logisim-evolution.</h2>
+            <h2>¿Cómo queda armado?</h2>
+            <p className="body">Compuerta por compuerta en Logisim-evolution: nada de chips decodificadores.</p>
           </div>
           <div className="stats">
             <div><b>19</b><span>decodificador<br />3 NOT · 9 AND · 7 OR</span></div>
@@ -286,7 +288,7 @@ export function Circuit() {
             <span className="mono-sm muted">Decodificador: términos AND compartidos entre segmentos</span>
           </Reveal>
           <Reveal delay={200} className="shot-wrap">
-            <Shot file={SCREENSHOTS.invalid} placeholder='Captura de Logisim: detector INVALID + "E" override' />
+            <Shot file={SCREENSHOTS.invalid} placeholder='Captura de Logisim: detector INVALID + corrección "E"' />
             <span className="mono-sm muted">INVALID = AB + AC · a,d,e,f,g = seg + INVALID · b,c = seg · INVALID'</span>
           </Reveal>
         </div>
@@ -314,6 +316,11 @@ export function Efficiency() {
             <Kicker>06 — EFICIENCIA</Kicker>
             <h2 className="h2-xl">{max} → {best}</h2>
             <p className="body-lg">{Math.round((1 - best / max) * 100)}% menos {label} usando don't-cares</p>
+            <p className="body-sm muted" style={{ maxWidth: '48ch' }}>
+              La SOP canónica es la forma sin simplificar: un AND de las cuatro entradas (un mintérmino) por cada fila
+              en la que el segmento enciende. <b>Compuertas</b> = cuántas hacen falta. <b>Entradas de compuertas</b> =
+              cuántos cables llegan a ellas. <b>Literales</b> = cuántas variables aparecen en las ecuaciones.
+            </p>
           </div>
           <div className="seg-ctl" role="tablist">
             {METRICS.map(([key, l]) => (
@@ -352,16 +359,16 @@ export function Demo({ n, setN, override, setOverride }) {
   const [dSeg, setDSeg] = useState('a')
   const inv = isInvalid(n)
   const firing = EXPRESSIONS[dSeg].map((t, i) => (matches(t.cube, n) ? i : -1)).filter((i) => i >= 0)
-  const caption = n < 10 ? `muestra ${n}` : override ? 'BCD inválido → E' : "BCD inválido, sin override: restos de los don't-cares"
+  const caption = n < 10 ? `muestra ${n}` : override ? 'BCD inválido → E' : "BCD inválido sin la corrección: los don't-cares dejan basura"
   return (
     <Slide id="s7" idx={7} label="Demo en vivo" className="alt">
       <div className="stack-44">
         <Reveal className="head-row">
           <div className="intro">
             <Kicker>07 — DEMO EN VIVO</Kicker>
-            <h2>Cambia los bits.</h2>
+            <h2>Pruébalo: mueve A, B, C, D.</h2>
           </div>
-          <span className="mono-sm muted">Teclas A B C D cambian las entradas · E activa el override · 0–9 eligen un dígito</span>
+          <span className="mono-sm muted">Teclas A B C D cambian las entradas · E activa la corrección · 0–9 eligen un dígito</span>
         </Reveal>
         <Reveal delay={100} className="demo-row">
           <div className="demo-ctl">
@@ -386,7 +393,7 @@ export function Demo({ n, setN, override, setOverride }) {
             </div>
             <button className="switch" aria-pressed={override} onClick={() => setOverride(!override)}>
               <span className={`switch-track ${override ? 'on' : ''}`}><span /></span>
-              "E" override
+              corrección "E"
             </button>
           </div>
           <div className="demo-disp">
@@ -421,7 +428,7 @@ export function Demo({ n, setN, override, setOverride }) {
                       )
                     })}
                   </span>
-                  <span className="forced">{forced ? (out ? 'forced on' : 'forced off') : ''}</span>
+                  <span className="forced">{forced ? (out ? 'forzado a 1' : 'forzado a 0') : ''}</span>
                   <span className="state" style={{ color: out ? ACC : MUTED }}>{out ? 'ON' : 'off'}</span>
                 </button>
               )
@@ -444,7 +451,7 @@ export function Demo({ n, setN, override, setOverride }) {
 const EXAMPLES = [
   { n: 5, title: 'cinco', note: "B y D están en 1. BD enciende a, B enciende c, BC'D enciende d y BC' enciende f y g. Ningún término de b ni de e es verdadero." },
   { n: 9, title: 'nueve', note: "Solo A enciende a, d, f y g. Los don't-cares permiten que A cubra toda la mitad inferior de esos K-maps." },
-  { n: 12, title: 'la trampa', note: "Sin corrección, los don't-cares hacen que 1100 parezca un 9. INVALID = AB se activa: apaga b y c, enciende a d e f g y se ve una E." },
+  { n: 12, title: 'el caso 1100', note: "Sin la corrección, los don't-cares hacen que 1100 parezca un 9. El término AB de INVALID se activa: apaga b y c, enciende a d e f g y se ve una E." },
 ]
 export function Examples({ load }) {
   return (
@@ -452,7 +459,7 @@ export function Examples({ load }) {
       <div className="stack-48">
         <Reveal className="intro" style={{ maxWidth: 720 }}>
           <Kicker>08 — EJEMPLOS RESUELTOS</Kicker>
-          <h2>Tres entradas, paso a paso.</h2>
+          <h2>Tres casos, segmento por segmento.</h2>
         </Reveal>
         <div className="examples">
           {EXAMPLES.map((ex, k) => {
@@ -503,7 +510,10 @@ export function TryIt() {
         <Reveal className="intro" style={{ flex: '1 1 480px' }}>
           <Kicker>09 — PRUÉBALO</Kicker>
           <h2 className="h2-xl">¿Preguntas?</h2>
-          <p className="body-lg" style={{ maxWidth: '32ch' }}>Escanea el código para usar la demo en tu teléfono.</p>
+          <p className="body-lg" style={{ maxWidth: '36ch' }}>
+            4 bits a 7 segmentos con 30 compuertas. Los don't-cares bajaron el conteo de 60 a 26.
+          </p>
+          <p className="body" style={{ maxWidth: '32ch' }}>Escanea el código para usar la demo en tu teléfono.</p>
           <div className="links">
             <a href={SITE}>two-bit-dev.github.io/bcd-7seg-decoder</a>
             <a href={REPO}>github.com/Two-Bit-dev/bcd-7seg-decoder</a>

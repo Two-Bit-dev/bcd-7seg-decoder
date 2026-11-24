@@ -1,0 +1,21 @@
+# Vector de prueba del decodificador BCD a 7 segmentos (IS-237, UNADECA)
+# Logisim-evolution: Simulate > Test Vector... y elegir este archivo.
+# Las 16 entradas: 0-9 muestran el digito, 10-15 muestran E (a d e f g encendidos, b y c apagados).
+
+A B C D seg_a seg_b seg_c seg_d seg_e seg_f seg_g
+0 0 0 0 1 1 1 1 1 1 0   # 0
+0 0 0 1 0 1 1 0 0 0 0   # 1
+0 0 1 0 1 1 0 1 1 0 1   # 2
+0 0 1 1 1 1 1 1 0 0 1   # 3
+0 1 0 0 0 1 1 0 0 1 1   # 4
+0 1 0 1 1 0 1 1 0 1 1   # 5
+0 1 1 0 1 0 1 1 1 1 1   # 6
+0 1 1 1 1 1 1 0 0 0 0   # 7
+1 0 0 0 1 1 1 1 1 1 1   # 8
+1 0 0 1 1 1 1 1 0 1 1   # 9
+1 0 1 0 1 0 0 1 1 1 1   # E
+1 0 1 1 1 0 0 1 1 1 1   # E
+1 1 0 0 1 0 0 1 1 1 1   # E
+1 1 0 1 1 0 0 1 1 1 1   # E
+1 1 1 0 1 0 0 1 1 1 1   # E
+1 1 1 1 1 0 0 1 1 1 1   # E

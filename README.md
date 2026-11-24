@@ -14,7 +14,7 @@ A combinational circuit, built only from logic gates, that converts a 4-bit BCD 
 | `docs/NELSON.md` | Step-by-step guide for building the Logisim circuit |
 | `docs/img/` | Circuit block diagram, QR code |
 | `web/` | Presentation website (React + Vite) |
-| `circuit/` | Logisim-evolution `.circ` file (coming) |
+| `circuit/` | Logisim-evolution `.circ` file (30 gates) and the 16-case test vector |
 
 ## Simplified expressions (with don't-cares)
 
@@ -44,5 +44,6 @@ Keys: ↑/↓ change section, 0–9 or ←/→ change the input.
 ### Adding the Logisim screenshots
 
 1. Put the images in `web/public/img/screenshots/`.
-2. List them in `web/src/screenshots.js`, e.g. `{ file: 'full-circuit.png', caption: 'Full circuit' }`.
+2. Set the file names in `web/src/screenshots.js`: `decoder` for the 0-9 decoder, `invalid` for the
+   detector + "E" override, e.g. `decoder: 'decoder.png'`.
 3. Push to `main`. GitHub Actions rebuilds and redeploys the site.
