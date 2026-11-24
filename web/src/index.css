@@ -194,7 +194,8 @@ h2.h2-xl { font-size: clamp(44px, 7vw, 96px); line-height: 0.95; letter-spacing:
   font: 400 13px/1.5 var(--mono); color: var(--muted); text-align: center; padding: 24px;
 }
 .shot:has(img) { border-style: solid; border-color: var(--line); padding: 0; background: #fff; }
-.shot img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.shot:has(img) { aspect-ratio: auto; }
+.shot img { width: 100%; height: auto; max-height: 85vh; object-fit: contain; display: block; }
 
 /* ── efficiency ── */
 .seg-ctl { display: flex; gap: 4px; padding: 4px; border: 1px solid rgba(236, 232, 225, 0.12); border-radius: 12px; }
