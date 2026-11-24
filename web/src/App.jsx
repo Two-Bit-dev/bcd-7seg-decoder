@@ -3,7 +3,7 @@ import {
   Title, Problem, TruthTable, KMaps, Expressions, Circuit, Efficiency, Demo, Examples, TryIt,
 } from './sections'
 
-const SECTIONS = ['Inicio', 'Problema', 'Tabla de verdad', 'Mapas K', 'Expresiones', 'Circuito', 'Eficiencia', 'Demo en vivo', 'Ejemplos', 'Pruébalo']
+const SECTIONS = ['Inicio', 'Problema', 'Tabla de verdad', 'K-maps', 'Expresiones', 'Circuito', 'Eficiencia', 'Demo en vivo', 'Ejemplos', 'Pruébalo']
 const DEMO = 7
 
 const go = (i) => document.getElementById(`s${i}`)?.scrollIntoView({ behavior: 'smooth' })

@@ -105,8 +105,8 @@ export function TruthTable({ n, setN, go }) {
           <Kicker>02 — TABLA DE VERDAD</Kicker>
           <h2>4 entradas, 7 salidas, 16 filas.</h2>
           <p className="body">
-            Las filas 10–15 nunca ocurren en BCD válido. Las marcamos con <b style={{ color: XCOL }}>X</b> («no
-            importa») para que los mapas K formen grupos más grandes.
+            Las filas 10–15 nunca ocurren en BCD válido. Las marcamos con <b style={{ color: XCOL }}>X</b> (don't
+            care) para que los K-maps formen grupos más grandes.
           </p>
           <p className="mono-sm muted">Haz clic en una fila para seleccionarla.</p>
           <button className="ghost" onClick={() => go(7)}>
@@ -157,25 +157,25 @@ export function TruthTable({ n, setN, go }) {
   )
 }
 
-/* 03 ─ Mapas K */
+/* 03 ─ K-maps */
 export function KMaps() {
   const [seg, setSeg] = useState('a')
   const [term, setTerm] = useState(null)
   const terms = EXPRESSIONS[seg]
   const note =
     term == null
-      ? 'Los puntos indican qué términos cubren cada celda. X = no importa (10–15); se toma como 1 cuando ayuda.'
+      ? "Los puntos indican qué términos cubren cada celda. X = don't care (10–15); se toma como 1 cuando ayuda."
       : (() => {
           const cells = coveredCells(terms[term].cube)
           return `${terms[term].label} cubre ${cells.length} celdas: ${cells.join(', ')}`
         })()
   return (
-    <Slide id="s3" idx={3} label="Mapas K">
+    <Slide id="s3" idx={3} label="K-maps">
       <div className="stack-48">
         <Reveal className="head-row">
           <div className="intro" style={{ maxWidth: 640 }}>
-            <Kicker>03 — MAPAS DE KARNAUGH</Kicker>
-            <h2>Un mapa por segmento.</h2>
+            <Kicker>03 — K-MAPS (KARNAUGH)</Kicker>
+            <h2>Un K-map por segmento.</h2>
             <p className="body">
               Filas y columnas siguen el código Gray, así que las celdas vecinas difieren en un solo bit. Cada grupo de
               color se convierte en un término. Haz clic en un término para aislarlo.
@@ -276,7 +276,7 @@ export function Circuit() {
           <div className="stats">
             <div><b>19</b><span>decodificador<br />3 NOT · 9 AND · 7 OR</span></div>
             <div><b>+3</b><span>detector<br />INVALID</span></div>
-            <div><b>+8</b><span>forzado<br />de «E»</span></div>
+            <div><b>+8</b><span>"E"<br />override</span></div>
             <div><b className="acc">30</b><span>compuertas<br />en total</span></div>
           </div>
         </Reveal>
@@ -286,7 +286,7 @@ export function Circuit() {
             <span className="mono-sm muted">Decodificador: términos AND compartidos entre segmentos</span>
           </Reveal>
           <Reveal delay={200} className="shot-wrap">
-            <Shot file={SCREENSHOTS.invalid} placeholder="Captura de Logisim: detector INVALID + forzado de E" />
+            <Shot file={SCREENSHOTS.invalid} placeholder='Captura de Logisim: detector INVALID + "E" override' />
             <span className="mono-sm muted">INVALID = AB + AC · a,d,e,f,g = seg + INVALID · b,c = seg · INVALID'</span>
           </Reveal>
         </div>
@@ -300,7 +300,7 @@ export function Circuit() {
 
 /* 06 ─ Eficiencia */
 const METRICS = [['gates', 'Compuertas'], ['inputs', 'Entradas de compuertas'], ['literals', 'Literales']]
-const EFF_NAMES = [['SOP canónica', 'mintérminos'], ['Mapa K', 'sin «no importa»'], ['Mapa K', 'con «no importa»']]
+const EFF_NAMES = [['SOP canónica', 'mintérminos'], ['K-map', "sin don't-cares"], ['K-map', "con don't-cares"]]
 export function Efficiency() {
   const [metric, setMetric] = useState('gates')
   const max = EFFICIENCY[0][metric]
@@ -313,7 +313,7 @@ export function Efficiency() {
           <div className="intro">
             <Kicker>06 — EFICIENCIA</Kicker>
             <h2 className="h2-xl">{max} → {best}</h2>
-            <p className="body-lg">{Math.round((1 - best / max) * 100)}% menos {label} usando «no importa»</p>
+            <p className="body-lg">{Math.round((1 - best / max) * 100)}% menos {label} usando don't-cares</p>
           </div>
           <div className="seg-ctl" role="tablist">
             {METRICS.map(([key, l]) => (
@@ -352,7 +352,7 @@ export function Demo({ n, setN, override, setOverride }) {
   const [dSeg, setDSeg] = useState('a')
   const inv = isInvalid(n)
   const firing = EXPRESSIONS[dSeg].map((t, i) => (matches(t.cube, n) ? i : -1)).filter((i) => i >= 0)
-  const caption = n < 10 ? `muestra ${n}` : override ? 'BCD inválido → E' : 'BCD inválido, sin forzado: restos de los «no importa»'
+  const caption = n < 10 ? `muestra ${n}` : override ? 'BCD inválido → E' : "BCD inválido, sin override: restos de los don't-cares"
   return (
     <Slide id="s7" idx={7} label="Demo en vivo" className="alt">
       <div className="stack-44">
@@ -361,7 +361,7 @@ export function Demo({ n, setN, override, setOverride }) {
             <Kicker>07 — DEMO EN VIVO</Kicker>
             <h2>Cambia los bits.</h2>
           </div>
-          <span className="mono-sm muted">Teclas A B C D cambian las entradas · E activa el forzado · 0–9 eligen un dígito</span>
+          <span className="mono-sm muted">Teclas A B C D cambian las entradas · E activa el override · 0–9 eligen un dígito</span>
         </Reveal>
         <Reveal delay={100} className="demo-row">
           <div className="demo-ctl">
@@ -386,7 +386,7 @@ export function Demo({ n, setN, override, setOverride }) {
             </div>
             <button className="switch" aria-pressed={override} onClick={() => setOverride(!override)}>
               <span className={`switch-track ${override ? 'on' : ''}`}><span /></span>
-              Forzar «E»
+              "E" override
             </button>
           </div>
           <div className="demo-disp">
@@ -421,8 +421,8 @@ export function Demo({ n, setN, override, setOverride }) {
                       )
                     })}
                   </span>
-                  <span className="forced">{forced ? (out ? 'forzado a 1' : 'forzado a 0') : ''}</span>
-                  <span className="state" style={{ color: out ? ACC : MUTED }}>{out ? 'ENC' : 'apag'}</span>
+                  <span className="forced">{forced ? (out ? 'forced on' : 'forced off') : ''}</span>
+                  <span className="state" style={{ color: out ? ACC : MUTED }}>{out ? 'ON' : 'off'}</span>
                 </button>
               )
             })}
@@ -431,7 +431,7 @@ export function Demo({ n, setN, override, setOverride }) {
         <Reveal delay={150} className="demo-k">
           <KMapGrid seg={dSeg} tint={firing} cur={n} dots={false} small />
           <p className="body-sm muted">
-            Mapa K del segmento <b className="acc">{dSeg}</b>. La celda con borde es la entrada actual; las celdas
+            K-map del segmento <b className="acc">{dSeg}</b>. La celda con borde es la entrada actual; las celdas
             teñidas son los grupos que la encienden. Haz clic en una fila de arriba para cambiar de segmento.
           </p>
         </Reveal>
@@ -443,8 +443,8 @@ export function Demo({ n, setN, override, setOverride }) {
 /* 08 ─ Ejemplos */
 const EXAMPLES = [
   { n: 5, title: 'cinco', note: "B y D están en 1. BD enciende a, B enciende c, BC'D enciende d y BC' enciende f y g. Ningún término de b ni de e es verdadero." },
-  { n: 9, title: 'nueve', note: 'Solo A enciende a, d, f y g. Los «no importa» permiten que A cubra toda la mitad inferior de esos mapas.' },
-  { n: 12, title: 'la trampa', note: 'Sin corrección, los «no importa» hacen que 1100 parezca un 9. INVALID = AB se activa: apaga b y c, enciende a d e f g y se ve una E.' },
+  { n: 9, title: 'nueve', note: "Solo A enciende a, d, f y g. Los don't-cares permiten que A cubra toda la mitad inferior de esos K-maps." },
+  { n: 12, title: 'la trampa', note: "Sin corrección, los don't-cares hacen que 1100 parezca un 9. INVALID = AB se activa: apaga b y c, enciende a d e f g y se ve una E." },
 ]
 export function Examples({ load }) {
   return (
@@ -459,7 +459,7 @@ export function Examples({ load }) {
             const displays =
               ex.n < 10
                 ? [{ on: lit(ex.n), cap: `muestra ${ex.n}`, color: LED }]
-                : [{ on: lit(ex.n, false), cap: 'sin forzado', color: XCOL }, { on: lit(ex.n), cap: 'con forzado', color: LED }]
+                : [{ on: lit(ex.n, false), cap: 'sin override', color: XCOL }, { on: lit(ex.n), cap: 'con override', color: LED }]
             return (
               <Reveal key={ex.n} delay={k * 120} className={`example ${ex.n > 9 ? 'trap' : ''}`}>
                 <div className="ex-head">
@@ -479,7 +479,7 @@ export function Examples({ load }) {
                     const f = EXPRESSIONS[s].filter((t) => matches(t.cube, ex.n)).map((t) => t.label)
                     return (
                       <span key={s} style={{ color: f.length ? INK : DIM }}>
-                        {f.length ? `${s} ← ${f.join(', ')}` : `${s}   apagado`}
+                        {f.length ? `${s} ← ${f.join(', ')}` : `${s}   off`}
                       </span>
                     )
                   })}

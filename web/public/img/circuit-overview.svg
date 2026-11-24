@@ -83,7 +83,7 @@
   <!-- Stage 5: Override -->
   <rect class="box" x="1080" y="90" width="200" height="420" rx="10" style="stroke:#c0392b"/>
   <rect x="1080" y="90" width="200" height="34" rx="10" fill="#c0392b"/>
-  <text class="step" x="1180" y="113" text-anchor="middle">6 · FORZADO DE "E"</text>
+  <text class="step" x="1180" y="113" text-anchor="middle">6 · "E" OVERRIDE</text>
   <g class="mono">
     <text x="1095" y="165">a + INV</text>
     <text x="1095" y="210">b · INV'</text>
@@ -150,5 +150,5 @@
   <text x="1190" y="640" style="font-size:16px;fill:#c0392b;font-weight:bold">INV</text>
 
   <!-- legend -->
-  <text class="small" x="30" y="835">Negro = decodificador de los dígitos 0–9 (de los mapas K).  Rojo = ruta de error que fuerza la letra "E" (segmentos a, d, e, f, g encendidos; b, c apagados) para las entradas 10–15.</text>
+  <text class="small" x="30" y="835">Negro = decodificador de los dígitos 0–9 (de los K-maps).  Rojo = ruta de error que fuerza la letra "E" (segmentos a, d, e, f, g encendidos; b, c apagados) para las entradas 10–15.</text>
 </svg>

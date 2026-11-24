@@ -12,7 +12,7 @@ const CODES = ['00', '01', '11', '10']
 export default function KMapGrid({ seg, tint = [], cur = null, dots = true, dimOthers = false, small = false }) {
   const terms = EXPRESSIONS[seg]
   return (
-    <div className={`kgrid ${small ? 'small' : ''}`} role="table" aria-label={`Mapa de Karnaugh de ${seg}`}>
+    <div className={`kgrid ${small ? 'small' : ''}`} role="table" aria-label={`K-map de ${seg}`}>
       <div className="krow head" role="row">
         <span className="klabel">{small ? '' : 'AB\\CD'}</span>
         {CODES.map((c) => <span key={c} className="kcol">{c}</span>)}
